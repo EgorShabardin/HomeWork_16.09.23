@@ -14,7 +14,7 @@ namespace Тумаков___Лабораторная_работа__2
             Console.Write("Введите ваше имя: ");
             userName = Console.ReadLine();
 
-            Console.WriteLine("Здравствуйте " + userName);
+            Console.WriteLine("Здравствуйте, " + userName);
 
 
             // Упражнение 2.2. Программа получает два числа и делит их.
