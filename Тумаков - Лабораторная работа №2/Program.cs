@@ -14,10 +14,10 @@ namespace Тумаков___Лабораторная_работа__2
             Console.Write("Введите ваше имя: ");
             userName = Console.ReadLine();
 
-            Console.WriteLine("Здравствуйте" + userName);
+            Console.WriteLine("Здравствуйте " + userName);
 
 
-            // Упражнение 2.2. Программа получает два числа и делит их.
+            /*// Упражнение 2.2. Программа получает два числа и делит их.
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("{0, 85}", "УПРАЖНЕНИЕ 2.2. ПРОГРАММА ПОЛУЧАЕТ ДВА ЧИСЛА И ДЕЛИТ ИХ \n");
@@ -93,7 +93,7 @@ namespace Тумаков___Лабораторная_работа__2
             else
             {
                 Console.WriteLine("Дискриминант меньше нуля. Корней нет.");
-            }
+            }*/
         }
     }
 }
