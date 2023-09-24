@@ -7,7 +7,7 @@ namespace Тумаков___Лабораторная_работа__2
         static void Main(string[] args)
         {
             // Упражнение 2.1. Программа приветствует пользователя по имени.
-            Console.WriteLine("{0, 88}", "УПРАЖНЕНИЕ 2.1. ПРОГРАММА ПРИВЕТСТВУЕТ ПОЛЬЗОВАТЕЛЯ ПО ИМЕНИ \n");
+            Console.WriteLine("{0, 88}", "УПРАЖНЕНИЕ 2.1. ПРОГРАММА ПРИВЕТСТВУЕТ ПОЛЬЗОВАТЕЛЯ ПО ИМЕНИ\n");
 
             string userName;
 
@@ -20,52 +20,79 @@ namespace Тумаков___Лабораторная_работа__2
             // Упражнение 2.2. Программа получает два числа и делит их.
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("{0, 85}", "УПРАЖНЕНИЕ 2.2. ПРОГРАММА ПОЛУЧАЕТ ДВА ЧИСЛА И ДЕЛИТ ИХ \n");
+            Console.WriteLine("{0, 85}", "УПРАЖНЕНИЕ 2.2. ПРОГРАММА ПОЛУЧАЕТ ДВА ЧИСЛА И ДЕЛИТ ИХ\n");
 
             int firstNumber, secondNumber;
             double result;
+            bool firstResult, secondResult;
 
             Console.Write("Введите первое целое число (делимое): ");
-            firstNumber = int.Parse(Console.ReadLine());
+            firstResult = int.TryParse(Console.ReadLine(), out firstNumber);
             Console.Write("Введите второе целое число (делитель): ");
-            secondNumber = int.Parse(Console.ReadLine());
+            secondResult = int.TryParse(Console.ReadLine(), out secondNumber);
 
-            if (secondNumber == 0)
+            if (firstResult && secondResult)
             {
-                Console.WriteLine("Деление невозможно. На ноль делить нельзя!");
+                if (secondNumber == 0)
+                {
+                    Console.WriteLine("Деление невозможно. На ноль делить нельзя!");
+                }
+                else
+                {
+                    result = (double)firstNumber / secondNumber;
+                    Console.WriteLine($"Результатом деления {firstNumber} на {secondNumber} будет {result}");
+                }
             }
             else
             {
-                result = (double)firstNumber / secondNumber;
-                Console.WriteLine($"Результатом деления {firstNumber} на {secondNumber} будет {result}");
+                Console.WriteLine("Вводить нужно целые числа! Деление невозможно!");
             }
 
 
             // Домашнее задание 2.1. Программа получает букву и выводит следующую за ней букву в алфавитном порядке.
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("{0, 110}", "ДОМАШНЕЕ ЗАДАНИЕ 2.1. ПРОГРАММА ПОЛУЧАЕТ БУКВУ И ВЫВОДИТ СЛЕДУЮЩУЮ ЗА НЕЙ БУКВУ В АЛФАВИТНОМ ПОРЯДКЕ \n");
+            Console.WriteLine("{0, 110}", "ДОМАШНЕЕ ЗАДАНИЕ 2.1. ПРОГРАММА ПОЛУЧАЕТ БУКВУ И ВЫВОДИТ СЛЕДУЮЩУЮ ЗА НЕЙ БУКВУ В АЛФАВИТНОМ ПОРЯДКЕ\n");
 
-            char[] Rus = { 'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я' };
-            char letter;
-            int index;
-
-            Console.Write("Введите букву алфавита русского языка: ");
-            letter = char.Parse(Console.ReadLine().ToUpper());
-
-            index = Array.IndexOf(Rus, letter) + 1;
-
-            if (index == Rus.Length)
+            try
             {
-                index = 0;
+                int index;
+                char userLetter, nextLetter;
+
+                Console.Write("Введите любую букву алфавита русского/английского языка: ");
+                userLetter = char.Parse(Console.ReadLine().ToUpper());
+
+                index = (int)userLetter + 1;
+                
+                if ((index < 65) || (index > 1072))
+                {
+                    throw new Exception("Вы ввели не букву из русского/английского алфавита!");
+                }
+
+                if ((index == ((int)'Z' + 1)) || (index == ((int)'Я' + 1)))
+                {
+                    Console.WriteLine($"Вы ввели букву {userLetter}, следующая за ней - A");
+                }
+                else
+                {
+                    nextLetter = Convert.ToChar(index);
+                    Console.WriteLine($"Вы ввели букву {userLetter}, следующая за ней - {nextLetter}");
+                }
             }
-            Console.WriteLine("Вы ввели букву {0}. Следующая за ней буква {1}", letter, Rus[index]);
+            catch (System.FormatException)
+            {
+                Console.WriteLine("Вы ввели не один символ! Необходимо ввести одну букву русского/английского алфавита!");
+            }
+            catch (Exception letterException)
+            {
+                Console.WriteLine(letterException.Message);
+            }
 
 
             // Домашнее задание 2.2. Программа находит корни квадратного уравнения.
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("{0, 91}", "ДОМАШНЕЕ ЗАДАНИЕ 2.2. ПРОГРАММА НАХОДИТ КОРНИ КВАДРАТНОГО УРАВНЕНИЯ \n");
+            Console.WriteLine("{0, 91}", "ДОМАШНЕЕ ЗАДАНИЕ 2.2. ПРОГРАММА НАХОДИТ КОРНИ КВАДРАТНОГО УРАВНЕНИЯ\n");
 
             double coefficientA, coefficientB, coefficientC, discriminant, x1, x2, x;
 

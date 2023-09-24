@@ -5,19 +5,37 @@ namespace Решение_задач
 {
     class Program
     {
+        struct Person
+        {
+            public string name;
+            public byte age;
+            public string city;
+            public int PIN;
+            public void dataPrint()
+            {
+                Console.WriteLine($"Пользователь {name}, {age} лет из города {city} имеет ПИН-код {PIN}");
+            }
+        }
         struct Student
         {
             public string name;
             public string surname;
             public int id;
             public DateTime birthday;
-            public char alcoholismCategory;
+            public alcoholismCategory alcoholismCategory;
             public int volumeAlcoholConsumed;
+        }
+        enum alcoholismCategory
+        {
+            a,
+            b,
+            c,
+            d
         }
         static void Main(string[] args)
         {
             // Задание №1. Программа выводит на экран все типы данных, их максимальные и минимальные значения.
-            Console.WriteLine("{0, 108}", "ЗАДАНИЕ №1. ПРОГРАММА ВЫВОДИТ НА ЭКРАН ВСЕ ТИПЫ ДАННЫХ, ИХ МАКСИМАЛЬНЫЕ И МИНИМАЛЬНЫЕ ЗНАЧЕНИЯ \n");
+            Console.WriteLine("{0, 108}", "ЗАДАНИЕ №1. ПРОГРАММА ВЫВОДИТ НА ЭКРАН ВСЕ ТИПЫ ДАННЫХ, ИХ МАКСИМАЛЬНЫЕ И МИНИМАЛЬНЫЕ ЗНАЧЕНИЯ\n");
 
             Console.WriteLine($"byte - максимальное значение: {byte.MaxValue} - минимальное значение: {byte.MinValue} \n" +
                               $"sbyte - максимальное значение: {sbyte.MaxValue} - минимальное значение: {sbyte.MinValue} \n" +
@@ -39,32 +57,39 @@ namespace Решение_задач
             // Задание №2. Программа получает от пользователя данные, сохраняет их и выводит на экран.
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("{0, 101}", "ЗАДАНИЕ №2. ПРОГРАММА ПОЛУЧАЕТ ОТ ПОЛЬЗОВАТЕЛЯ ДАННЫЕ, СОХРАНЯЕТ ИХ И ВЫВОДИТ НА ЭКРАН \n");
+            Console.WriteLine("{0, 101}", "ЗАДАНИЕ №2. ПРОГРАММА ПОЛУЧАЕТ ОТ ПОЛЬЗОВАТЕЛЯ ДАННЫЕ, СОХРАНЯЕТ ИХ И ВЫВОДИТ НА ЭКРАН\n");
 
-            string userName, userSity;
-            byte userAge;
-            int userPIN;
+            try
+            {
+                Person newPerson = new Person();
 
-            Console.Write("Введите ваше имя: ");
-            userName = Console.ReadLine();
-            Console.Write("Введите ваш возраст (целое число): ");
-            userAge = byte.Parse(Console.ReadLine());
-            Console.Write("Из какого вы города: ");
-            userSity = Console.ReadLine();
-            Console.Write("Введите ваш PIN-код: ");
-            userPIN = int.Parse(Console.ReadLine());
+                Console.Write("Введите ваше имя: ");
+                newPerson.name = Console.ReadLine();
+                Console.Write("Введите ваш возраст (целое число): ");
+                newPerson.age = byte.Parse(Console.ReadLine());
+                Console.Write("Из какого вы города: ");
+                newPerson.city = Console.ReadLine();
+                Console.Write("Введите ваш PIN-код: ");
+                newPerson.PIN = int.Parse(Console.ReadLine());
 
-            (string, byte, string, int) person  = (userName, userAge, userSity, userPIN);
-
-            Console.WriteLine($"Пользователь {person.Item1}, {person.Item2} лет из города {person.Item3} имеет PIN-код {person.Item4}");
+                newPerson.dataPrint();
+            }
+            catch (System.FormatException)
+            {
+                Console.WriteLine("В поле с возрастом и ПИН-кодом необходимо вводить целые числа!");
+            }
+            catch (System.OverflowException)
+            {
+                Console.WriteLine("Возраст человека или ПИН-код не могут быть такими большими!");
+            }
 
 
             // Задание №3. Программа получает строку и заменяет в ней строчные буквы на заглавные, а заглавные на строчные.
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("{0, 115}", "ЗАДАНИЕ №3. ПРОГРАММА ПОЛУЧАЕТ СТОРКУ И ЗАМЕНЯЕТ В НЕЙ СТРОЧНЫЕ БУКВЫ НА ЗАГЛАВНЫЕ, А ЗАГЛАВНЫЕ НА СТРОЧНЫЕ \n");
+            Console.WriteLine("{0, 115}", "ЗАДАНИЕ №3. ПРОГРАММА ПОЛУЧАЕТ СТОРКУ И ЗАМЕНЯЕТ В НЕЙ СТРОЧНЫЕ БУКВЫ НА ЗАГЛАВНЫЕ, А ЗАГЛАВНЫЕ НА СТРОЧНЫЕ\n");
 
-            string userString, letter;
+            string userString;
             string resultString = "";
 
             Console.Write("Введите строку, состоящую из заглавных и строчных букв: ");
@@ -72,78 +97,105 @@ namespace Решение_задач
 
             for (int i = 0; i < userString.Length; i++)
             {
-                letter = userString[i].ToString().ToUpper();
-                if (userString[i].ToString() == letter)
+                if (char.IsUpper(userString[i]))
                 {
-                    letter = letter.ToLower();
+                    resultString += userString[i].ToString().ToLower();
                 }
-                resultString += letter;
+                else
+                {
+                    resultString += userString[i].ToString().ToUpper();
+                }
             }
-            Console.WriteLine($"Получилась строка: {resultString}");
 
+            Console.WriteLine($"Вы ввели строку: {userString}. Получилась строка: {resultString}");
 
+            
             // Задание №4. Программа получает строку, подстроку и находит количество вхождений.
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("{0,98}", "ЗАДАНИЕ №4. ПРОГРАММА ПОЛУЧАЕТ СТРОКУ, ПОДСТРОКУ И НАХОДИТ КОЛИЧЕСТВО ВХОЖДЕНИЙ \n");
+            Console.WriteLine("{0,98}", "ЗАДАНИЕ №4. ПРОГРАММА ПОЛУЧАЕТ СТРОКУ, ПОДСТРОКУ И НАХОДИТ КОЛИЧЕСТВО ВХОЖДЕНИЙ\n");
 
-            string subString, convertedString;
+            string subString, reducedString;
             int numberOccurrences = 0;
+            int index;
 
             Console.Write("Введите строку: ");
             userString = Console.ReadLine();
             Console.Write("Введите подстроку: ");
             subString = Console.ReadLine();
 
-            convertedString = userString.Replace(subString, "1");
-
-            for (int i = 0; i < convertedString.Length; i++)
+            if (userString.Length >= subString.Length)
             {
-                if (convertedString[i] == '1')
-                {
-                    numberOccurrences += 1;
-                }
-            }
+                reducedString = userString;
 
-            Console.WriteLine($"В строке {userString} подстрока {subString} встречается {numberOccurrences} раз");
+                do
+                {
+                    index = reducedString.IndexOf(subString);
+                    if (index != -1)
+                    {
+                        reducedString = reducedString.Substring(index + 1);
+                        numberOccurrences++;
+                    }
+                }
+                while (index != -1);
+
+                Console.WriteLine($"В строке {userString} подстрока {subString} встречается {numberOccurrences} раз");
+            }
+            else
+            {
+                Console.WriteLine("Подстрока больше чем строка. Такое невозможно!");
+            }
 
 
             // Задание №5. Программа определяет сколько бутылок виски беспошлинной торговли нужно будет купить, чтобы экономия по сравнению с обычной средней ценой фактически покрыла расходы на отпуск.
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("{0,109}", "ЗАДАНИЕ №5. ПРОГРАММА ОПРЕДЕЛЯЕТ СКОЛЬКО БУТЫЛОК ВИСКИ НУЖНО КУПИТЬ, ЧТОБЫ ПОКРЫТЬ ЦЕНУ НА ОТПУСК \n");
+            Console.WriteLine("{0,109}", "ЗАДАНИЕ №5. ПРОГРАММА ОПРЕДЕЛЯЕТ СКОЛЬКО БУТЫЛОК ВИСКИ НУЖНО КУПИТЬ, ЧТОБЫ ПОКРЫТЬ ЦЕНУ НА ОТПУСК\n");
 
-            double normPrice, salePrice, holidayPrice, benefit, numberBottles;
+            try
+            {
+                double normPrice, salePrice, holidayPrice, benefit, numberBottles;
 
-            Console.Write("Введите стандартную цену бутылки виски в рублях: ");
-            normPrice = double.Parse(Console.ReadLine());
-            Console.Write("Введите скидку в DutyFree (без знака процентов): ");
-            salePrice = double.Parse(Console.ReadLine());
-            Console.Write("Введите стоимость отпуска в рублях: ");
-            holidayPrice = double.Parse(Console.ReadLine());
+                Console.Write("Введите стандартную цену бутылки виски в рублях: ");
+                normPrice = double.Parse(Console.ReadLine());
+                Console.Write("Введите скидку в DutyFree (без знака процентов): ");
+                salePrice = double.Parse(Console.ReadLine());
+                Console.Write("Введите стоимость отпуска в рублях: ");
+                holidayPrice = double.Parse(Console.ReadLine());
 
-            benefit = normPrice * (salePrice / 100);
-            numberBottles = Math.Floor(holidayPrice / benefit);
+                benefit = normPrice * (salePrice / 100);
+                numberBottles = Math.Floor(holidayPrice / benefit);
 
-            Console.WriteLine($"Вам необходимо купить {numberBottles} бутылок виски");
+                Console.WriteLine($"Вам необходимо купить {numberBottles} бутылок виски");
+            }
+            catch (System.FormatException)
+            {
+                Console.WriteLine("Вы ввели не числа. Необходимо вводить числа!");
+            }
 
 
             // Задание №6. Программа воспроизводит разговор Гарри Поттера и дневника Тома Реддла.
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("{0,98}", "ЗАДАНИЕ №6. ПРОГРАММА ВОСПРОИЗВОДИТ РАЗГОВОР ГАРРИ ПОТТЕРА И ДНЕВНИКА ТОМА РЕДДЛА \n");
+            Console.WriteLine("{0,98}", "ЗАДАНИЕ №6. ПРОГРАММА ВОСПРОИЗВОДИТ РАЗГОВОР ГАРРИ ПОТТЕРА И ДНЕВНИКА ТОМА РЕДДЛА\n");
+
+            string userName;
 
             Console.Write("Поздоровайтесь: ");
             Console.ReadLine();
+
             Console.Write("Как вас зовут: ");
             userName = Console.ReadLine();
             Console.WriteLine($"Привет, {userName}");
+
             Console.Write("Спросите, известно ли что-то о тайной комнате: ");
             Console.ReadLine();
             Console.WriteLine("Да");
+
             Console.Write("Спросите, может ли рассказать: ");
             Console.ReadLine();
             Console.WriteLine("Нет");
+
             Thread.Sleep(5000);
             Console.BackgroundColor = ConsoleColor.Red;
             Console.WriteLine("Но могу показать");
@@ -153,7 +205,7 @@ namespace Решение_задач
             // Задание №7. Программа вычисляет контрольную цифру штрихкода (EAN13).
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("{0,91}", "ЗАДАНИЕ №7. ПРОГРАММА ВЫЧИСЛЯЕТ КОНТРОЛЬНУЮ ЦИФРУ ШТРИХКОДА (EAN13) \n");
+            Console.WriteLine("{0,91}", "ЗАДАНИЕ №7. ПРОГРАММА ВЫЧИСЛЯЕТ КОНТРОЛЬНУЮ ЦИФРУ ШТРИХКОДА (EAN13)\n");
 
             Random randomNum = new Random();
             string barcode = "";
@@ -201,10 +253,9 @@ namespace Решение_задач
             // Задание №8. Программа создает структуру студента и подсчитывает общий объем алкоголя и кто сколько процентов выпил.
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("{0,119}", "ЗАДАНИЕ №8. ПРОГРАММА СОЗДАЕТ СТРУКТУРУ СТУДЕНТА И ПОДСЧИТЫВАЕТ ОБЩИЙ ОБЪЕМ АЛКОГОЛЯ И КТО СКОЛЬКО ПРОЦЕНТОВ ВЫПИЛ \n");
+            Console.WriteLine("{0,119}", "ЗАДАНИЕ №8. ПРОГРАММА СОЗДАЕТ СТРУКТУРУ СТУДЕНТА И ПОДСЧИТЫВАЕТ ОБЩИЙ ОБЪЕМ АЛКОГОЛЯ И КТО СКОЛЬКО ПРОЦЕНТОВ ВЫПИЛ\n");
 
-            double overallVolume;
-            double percentVasya, percentPeter, percentVania, percentKonstantin, percentSasha;
+            double overallVolume, percentVasya, percentPeter, percentVania, percentKonstantin, percentSasha;
 
             Student Vasya = new Student();
             Vasya.name = "Вася";
@@ -212,7 +263,8 @@ namespace Решение_задач
             Vasya.id = 1234;
             DateTime VasyaBirthday = new DateTime(2001, 10, 3);
             Vasya.birthday = VasyaBirthday;
-            Vasya.alcoholismCategory = 'a';
+            alcoholismCategory alcoholismCategoryVasya = alcoholismCategory.a;
+            Vasya.alcoholismCategory = alcoholismCategoryVasya;
             Vasya.volumeAlcoholConsumed = 10;
 
             Student Peter = new Student();
@@ -221,7 +273,8 @@ namespace Решение_задач
             Peter.id = 4587;
             DateTime PeterBirthday = new DateTime(2002, 09, 14);
             Peter.birthday = PeterBirthday;
-            Peter.alcoholismCategory = 'b';
+            alcoholismCategory alcoholismCategoryPeter = alcoholismCategory.b;
+            Peter.alcoholismCategory = alcoholismCategoryPeter;
             Peter.volumeAlcoholConsumed = 8;
 
             Student Vania = new Student();
@@ -230,7 +283,8 @@ namespace Решение_задач
             Vania.id = 7820;
             DateTime VaniaBirthday = new DateTime(2000, 12, 27);
             Vania.birthday = VaniaBirthday;
-            Vania.alcoholismCategory = 'c';
+            alcoholismCategory alcoholismCategoryVania = alcoholismCategory.c;
+            Vania.alcoholismCategory = alcoholismCategoryVania;
             Vania.volumeAlcoholConsumed = 3;
 
             Student Konstantin = new Student();
@@ -239,7 +293,8 @@ namespace Решение_задач
             Konstantin.id = 0024;
             DateTime KonstantinBirthday = new DateTime(2003, 02, 01);
             Konstantin.birthday = KonstantinBirthday;
-            Konstantin.alcoholismCategory = 'd';
+            alcoholismCategory alcoholismCategoryKonstantin = alcoholismCategory.d;
+            Konstantin.alcoholismCategory = alcoholismCategoryKonstantin;
             Konstantin.volumeAlcoholConsumed = 0;
 
             Student Sasha = new Student();
@@ -248,7 +303,8 @@ namespace Решение_задач
             Sasha.id = 9985;
             DateTime SashaBirthday = new DateTime(2005, 06, 24);
             Sasha.birthday = SashaBirthday;
-            Sasha.alcoholismCategory = 'a';
+            alcoholismCategory alcoholismCategorySasha = alcoholismCategory.a;
+            Sasha.alcoholismCategory = alcoholismCategorySasha;
             Sasha.volumeAlcoholConsumed = 11;
 
             overallVolume = Peter.volumeAlcoholConsumed + Vasya.volumeAlcoholConsumed + Vania.volumeAlcoholConsumed + Konstantin.volumeAlcoholConsumed + Sasha.volumeAlcoholConsumed;
